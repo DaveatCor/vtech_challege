@@ -5,6 +5,7 @@ class Todo {
   int? id;
   ValueNotifier<String>? title;
   ValueNotifier<bool>? isCheck;
+  ValueNotifier<bool>? isUpdate = ValueNotifier(false);
 
   Todo({
     this.id,

@@ -9,17 +9,17 @@ import 'package:vtech_coding_challenge/presentation/widgets/dialog.custom.dart';
 List<Map<String, dynamic>> sampleData = [
   {
     'id': 1, 
-    'title': 'ab',
+    'title': 'dog',
     'is_check': false
   },
   {
     'id': 2, 
-    'title': 'abc',
+    'title': 'cat',
     'is_check': false
   },
   {
     'id': 3, 
-    'title': 'abcd',
+    'title': 'donky',
     'is_check': false
   }
 
@@ -28,6 +28,7 @@ List<Map<String, dynamic>> sampleData = [
 class TodoUcImpl implements TodoUsecase {
 
   List<Todo> lstTodo = [];
+
   List<Todo>? filterTodo;
 
   // This member use to handle data loading
@@ -86,12 +87,19 @@ class TodoUcImpl implements TodoUsecase {
   @override
   void onSubmit(String? value){
     
-    if (value!.isNotEmpty){
-      // Show Warning
-      if (isAvailableItem(value)){
-        ScaffoldMessenger.of(context!).showSnackBar( const SnackBar(content: Text('Item already exist')));
-      } else {
-        addItem();
+    // Update item
+    if (editItemIndex.value != -1){
+      update();
+    }
+    // Add new item 
+    else {
+      if (value!.isNotEmpty){
+        // Show Warning
+        if (isAvailableItem(value)){
+          ScaffoldMessenger.of(context!).showSnackBar( const SnackBar(content: Text('Item already exist')));
+        } else {
+          addItem();
+        }
       }
     }
   }
@@ -132,6 +140,7 @@ class TodoUcImpl implements TodoUsecase {
     
     lstTodo[editItemIndex.value].title!.value = controller.text;
     resetUpdate();
+
     resetFilter();
   }
 
@@ -165,11 +174,7 @@ class TodoUcImpl implements TodoUsecase {
   }
   
   List<Todo> filterMatchInput(String value){
-    print("filterMatchInput");
     return lstTodo.where((e) {
-      print("e.title?.value ${e.title?.value}");
-      print("value $value");
-      print(e.title?.value == value);
       if (e.title?.value == value) return true;
       return false;
     }).toList();
@@ -178,6 +183,7 @@ class TodoUcImpl implements TodoUsecase {
   void resetFilter() {
 
     filterTodo = null;
+    controller.clear();
     // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
     isInputting.notifyListeners();
   }
@@ -187,7 +193,7 @@ class TodoUcImpl implements TodoUsecase {
     lstTodo[editItemIndex.value].isUpdate!.value = false;
     controller.clear();
     editItemIndex.value = -1;
-    
+    resetFilter();
   }
 
   @override

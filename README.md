@@ -1,16 +1,21 @@
-# vtech_coding_challenge
+## Add Item
 
-A new Flutter project.
+https://github.com/DaveatCor/vtech_challege/assets/28787774/689bfb11-9755-4947-a8ba-18ec8fb5a7c1
 
-## Getting Started
+## Duplicate Item
 
-This project is a starting point for a Flutter application.
+https://github.com/DaveatCor/vtech_challege/assets/28787774/ca7c8095-8b62-442a-8c2a-91dabf0c6998
 
-A few resources to get you started if this is your first Flutter project:
+## Mark Complet/Un complete
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+https://github.com/DaveatCor/vtech_challege/assets/28787774/756a68c4-3fc1-4c0e-8ef4-c99accc9ed21
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Update Item
+
+https://github.com/DaveatCor/vtech_challege/assets/28787774/2f0f684b-0152-4622-8a65-fc57b04e24f8
+
+## Remove Item
+
+https://github.com/DaveatCor/vtech_challege/assets/28787774/4966e963-71a8-4d5b-88ad-b0d106f2180b
+
+

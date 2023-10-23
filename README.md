@@ -1,5 +1,5 @@
 State management:
-I'm using Provider 4 years. But in this challenge, I didn't use provider. Because ValueNotifer is better for performance when we focus only once screen's state.
+I'm using Provider for 4 years. But in this challenge, I didn't use provider. Because ValueNotifer is better for performance when we focus only once screen's state.
 
 ## Add Item
 

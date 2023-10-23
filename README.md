@@ -1,3 +1,6 @@
+State management:
+I'm using Provider 4 years. But in this challenge, I didn't use provider. Because ValueNotifer is better for performance when we focus only once screen's state.
+
 ## Add Item
 
 https://github.com/DaveatCor/vtech_challege/assets/28787774/689bfb11-9755-4947-a8ba-18ec8fb5a7c1

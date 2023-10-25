@@ -211,6 +211,16 @@ class TodoItem extends StatelessWidget {
           ),
         ),
 
+        ValueListenableBuilder(
+          valueListenable: todo!.isEdited!, 
+          builder: (context, isEdited, wg){
+            if (isEdited == false) return const SizedBox();
+
+            return const Text("Edited", style: TextStyle(color: Colors.green),);
+
+          }
+        ),
+
         // This ValueListenableBuilder Use For Show/Hide Whenever Item Mark Checked/Un-Check
         if (clickUpdate != null) ValueListenableBuilder(
           valueListenable: todo!.isCheck!, 

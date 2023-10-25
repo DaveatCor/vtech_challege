@@ -10,17 +10,20 @@ List<Map<String, dynamic>> sampleData = [
   {
     'id': 1, 
     'title': 'dog',
-    'is_check': false
+    'is_check': false,
+    'is_edited': false 
   },
   {
     'id': 2, 
     'title': 'cat',
-    'is_check': false
+    'is_check': false,
+    'is_edited': false
   },
   {
     'id': 3, 
     'title': 'donky',
-    'is_check': false
+    'is_check': false,
+    'is_edited': false
   }
 
 ];
@@ -57,6 +60,8 @@ class TodoUcImpl implements TodoUsecase {
 
         lstTodo = List.from(jsonDecode(response!.body)).map((e) => Todo.fromJson(e)).toList();
 
+        sortAtoZ();
+
         isReady.value = true;
         
       });
@@ -73,7 +78,8 @@ class TodoUcImpl implements TodoUsecase {
 
     EasyDebounce.debounce(
       'onChange', const Duration(seconds: 1), () {
-        filterTodo = filterMatchInput(value!).map((e) => e).toList();
+        
+        filterTodo = filterMatchInput(value!.replaceAll(" ", "")).map((e) => e).toList();
 
         isInputting.value = false;
         
@@ -86,18 +92,25 @@ class TodoUcImpl implements TodoUsecase {
 
   @override
   void onSubmit(String? value){
-    
+
     // Update item
     if (editItemIndex.value != -1){
+      controller.text = value!.replaceAll(" ", "");
       update();
     }
     // Add new item 
     else {
       if (value!.isNotEmpty){
+
         // Show Warning
-        if (isAvailableItem(value)){
+        if (isAvailableItem(value.replaceAll(" ", ""))){
           ScaffoldMessenger.of(context!).showSnackBar( const SnackBar(content: Text('Item already exist')));
         } else {
+
+          print("value $value");
+
+          controller.text = value.replaceAll(" ", "");
+
           addItem();
         }
       }
@@ -121,6 +134,8 @@ class TodoUcImpl implements TodoUsecase {
 
     resetFilter();
 
+    sortAtoZ();
+
     // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
     isReady.notifyListeners();
   }
@@ -137,11 +152,24 @@ class TodoUcImpl implements TodoUsecase {
 
   @override
   void update(){
-    
-    lstTodo[editItemIndex.value].title!.value = controller.text;
-    resetUpdate();
 
-    resetFilter();
+    print("lstTodo.isEmpty) ${lstTodo.isEmpty}");
+    if (filterTodo!.isEmpty) {
+
+      lstTodo[editItemIndex.value].title!.value = controller.text;
+
+      if(lstTodo[editItemIndex.value].isEdited!.value == false) {
+        lstTodo[editItemIndex.value].isEdited!.value = true;
+      }
+      
+      print("lstTodo[editItemIndex.value].title!.value ${lstTodo[editItemIndex.value].title!.value}");
+
+      resetUpdate();
+
+      resetFilter();
+
+      sortAtoZ();
+    }
   }
 
   @override
@@ -170,6 +198,8 @@ class TodoUcImpl implements TodoUsecase {
     // This below is to noify Text to LineThrough / None
     // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
     lstTodo[index].title!.notifyListeners();
+
+    sortAtoZ();
 
   }
   
@@ -202,4 +232,16 @@ class TodoUcImpl implements TodoUsecase {
     controller.clear();
   }
   
+  void sortAtoZ() {
+    lstTodo.sort((a, b){
+      return a.title!.value.compareTo(b.title!.value);
+    });
+  }
+  
+  // void sortByChecked() {
+  //   print(lstTodo.map((e) {
+  //     if (e.isCheck!.value == true) return e;
+  //   }));
+
+  // }
 }
